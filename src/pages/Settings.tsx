@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useTheme } from '@/components/theme-provider';
-import PrivacyNote from '../components/PrivacyNote';
+import PrivacyNote from '@/components/PrivacyNote';
 
 export default function Settings() {
   const { theme, setTheme } = useTheme();
@@ -9,7 +9,7 @@ export default function Settings() {
     <section>
       <h1 className="text-2xl font-semibold mb-6">Settings</h1>
 
-      <div className="flex flex-col gap-1.5 mb-5">
+      <div className="flex flex-col gap-1.5 mb-5 max-w-4xl mx-auto">
         <span className="text-sm text-muted-foreground">Theme</span>
         <select
           value={theme}
@@ -20,16 +20,14 @@ export default function Settings() {
           <option value="dark">Dark</option>
           <option value="system">System</option>
         </select>
+        <Button
+          variant="ghost"
+          className="px-0 text-muted-foreground hover:text-foreground ml-auto"
+          onClick={() => setTheme('system')}
+        >
+          Reset Theme
+        </Button>
       </div>
-
-      <Button
-        variant="ghost"
-        size="sm"
-        className="px-0 text-muted-foreground hover:text-foreground underline"
-        onClick={() => setTheme('system')}
-      >
-        Reset theme to default
-      </Button>
 
       <PrivacyNote />
     </section>

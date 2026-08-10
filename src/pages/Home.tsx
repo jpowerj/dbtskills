@@ -12,6 +12,7 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card';
+import PrivacyNote from '@/components/PrivacyNote';
 
 interface Note {
   id: string;
@@ -25,7 +26,6 @@ export default function Home() {
   const [notes, setNotes] = useLocalStorage<Note[]>('notes', []);
   const [titleDraft, setTitleDraft] = useState('');
   const [textDraft, setTextDraft] = useState('');
-  const [imageDraft, setImageDraft] = useState('');
 
   function addNote() {
     const title = titleDraft.trim();
@@ -38,14 +38,12 @@ export default function Home() {
         id: crypto.randomUUID(),
         title,
         text,
-        imageUrl: imageDraft.trim() || undefined,
         createdAt: Date.now(),
       },
     ]);
 
     setTitleDraft('');
     setTextDraft('');
-    setImageDraft('');
   }
 
   function removeNote(id: string) {
@@ -54,11 +52,11 @@ export default function Home() {
 
   return (
     <section>
-      <h1 className="text-2xl font-semibold mb-6">Notes</h1>
+      <h1 className="text-2xl font-semibold mb-6">Home: Notes to Self</h1>
 
-      <Card className="mb-8">
+      <Card className="mb-8 max-w-4xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-base">New note</CardTitle>
+          <CardTitle className="text-base">Create New Note</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           <Input
@@ -85,10 +83,11 @@ export default function Home() {
         </CardFooter>
       </Card>
 
+      <div className="flex flex-col gap-4 mx-auto max-w-4xl">
       {notes.length === 0 ? (
-        <p className="italic text-muted-foreground">No notes yet.</p>
+        <p className="italic text-muted-foreground mb-8">No notes yet.</p>
       ) : (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mx-auto max-w-4xl">
           {notes.map((note) => (
             <Card key={note.id}>
               <CardHeader>
@@ -126,6 +125,8 @@ export default function Home() {
           ))}
         </div>
       )}
+    </div>
+    <PrivacyNote />
     </section>
   );
 }
